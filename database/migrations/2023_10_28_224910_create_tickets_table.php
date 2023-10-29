@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->integer('board_id');
             $table->enum('status', ['working', 'done'])->default('working');
+            $table->datetime('marked_done')->nullable();
             $table->timestamps();
         });
     }

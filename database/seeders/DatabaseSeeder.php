@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
         
         if (!User::where('email','admin@test.com')->first()) {
          
@@ -26,5 +25,8 @@ class DatabaseSeeder extends Seeder
                 'admin'     => true,
             ]);
         }
+
+        User::factory(10)->create();
+
     }
 }

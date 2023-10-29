@@ -20,6 +20,9 @@
     "dependencies": {
         "@inertiajs/vue3": "^1.0.13",
         "@vitejs/plugin-vue": "^4.4.0",
+        "i": "^0.3.7",
+        "npm": "^10.2.1",
+        "or": "^0.2.0",
         "uuid": "^9.0.1",
         "vue": "^3.3.7"
     }

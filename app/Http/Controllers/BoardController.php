@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Board;
 use App\Models\User;
+use App\Models\Ticket;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ class BoardController extends Controller
     public function index()
     {
         return Inertia::render('Boards/Index', [
-            'boards' => Auth::user()->boards
+            'boards' => Auth::user()->boards()->with(['tickets','workingTickets','doneTickets'])->get(),
         ]);
     }
 
@@ -47,7 +48,9 @@ class BoardController extends Controller
     }
     public function createTicket(Board $board)
     {
-        return Inertia::render('Boards/Create');
+        return Inertia::render('Boards/Create-Ticket', [
+            'board' => $board
+        ]);
 
     }
     
@@ -57,16 +60,12 @@ class BoardController extends Controller
             'title' => ['required', 'max:100'],
         ]);
 
-        dd(request()->all());
-
-        $board = Board::create([
+        $board = Ticket::create([
             'title'=> Request::input('title'),
-            'creator_id'=> Auth::user()->id,
+            'board_id'=> $board->id,
         ]);
 
-        $board->users()->attach(Request::input('users'));
-
-        return Redirect::route('boards.index')->with('success', 'Board created.');
+        return Redirect::route('boards.index')->with('success', 'Ticket created.');
 
     }
     
