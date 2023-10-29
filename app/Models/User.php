@@ -42,4 +42,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    function boards() {
+        return $this->belongsToMany(Board::class);
+    }
 }

@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Board extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['title','creator_id'];
+
+    function users() {
+        return $this->belongsToMany(User::class);
+    }
 }
