@@ -34,7 +34,6 @@ class BoardController extends Controller
             'users' => ['required', 'array'],
             'users.*' => ['required'],
         ]);
-        // dd(request()->all());
 
         $board = Board::create([
             'title'=> Request::input('title'),

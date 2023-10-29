@@ -8,12 +8,17 @@ use App\Models\Ticket;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     
     public function index()
     {
+
+        if (!Auth::user()->admin) {
+            return Inertia::render('Dashboard');
+        }
 
         $mostIncludedUser = User::select('name')->withCount('boards')->orderBy('boards_count','desc')->first();
 
@@ -40,6 +45,7 @@ class DashboardController extends Controller
                             ->selectRaw('count(tickets.id) as marked_done_tickets')
                             ->whereBetween('marked_done', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
                             ->groupBy('boards.id')
+                            ->orderBy('marked_done_tickets','desc')
                             ->first();
 
         return Inertia::render('Dashboard',[
